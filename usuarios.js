@@ -1,9 +1,12 @@
 const express = require("express");
+var cors = require('cors');
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const { default: fetch } = require("node-fetch");
 const connectionString = "mongodb://localhost:27017/users";
 const app = express();
+// ATENCION: si se usa navegador se necesita habilitar cors
+app.use(cors());
 const port = process.env.PORT || 2800;
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -82,16 +85,25 @@ app.delete("/usuarios/:id", (peticion, respuesta)=> {
     .then((resultado)=>console.log(resultado));
 });
 
-/* //* Mostrando los usuarios 
+ /**
+  * Mostrando los usuarios 
+  * TODO: borrar este objeto y enlazar con la base de datos
+  */
+ const user = new UserModel({
+    name: "fer",
+    password: "peticion.body.password",
+    email: "peticion.body.email",
+    age: "peticion.body.age",
+})
 app.get("/usuarios", (peticion, respuesta)=> {
     UserModel.find({}, (error, usuarios)=> {
         if (error) {
             respuesta.status(500).send({mensaje: "Ha ocurrido un error MOSTRANDO los usuarios"});
         }
-        respuesta.status(200).send({usuarios})
+        respuesta.status(200).send(JSON.stringify(user))
     })
     .then((resultado)=>console.log(resultado));
-}); */
+}); 
 
 
 //* FETCH

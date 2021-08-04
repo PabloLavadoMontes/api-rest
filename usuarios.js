@@ -89,18 +89,18 @@ app.delete("/usuarios/:id", (peticion, respuesta)=> {
   * Mostrando los usuarios 
   * TODO: borrar este objeto y enlazar con la base de datos
   */
- const user = new UserModel({
+/*  const user = new UserModel({
     name: "fer",
     password: "peticion.body.password",
     email: "peticion.body.email",
     age: "peticion.body.age",
-})
+}) */
 app.get("/usuarios", (peticion, respuesta)=> {
     UserModel.find({}, (error, usuarios)=> {
         if (error) {
             respuesta.status(500).send({mensaje: "Ha ocurrido un error MOSTRANDO los usuarios"});
         }
-        respuesta.status(200).send(JSON.stringify(user))
+        respuesta.status(200).send(JSON.stringify(usuarios))
     })
     .then((resultado)=>console.log(resultado));
 }); 
